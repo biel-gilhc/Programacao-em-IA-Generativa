@@ -1,53 +1,148 @@
-import streamlit as st
-import pandas as pd
+# 2
 
-from sklearn.tree import DecisionTreeClassifier
+import pandas as pd
 from sklearn.linear_model import LinearRegression
 
-def resultado_copa():
-    from manin import gols_input
-
-
-st.title('ENSINA A MÁQUINA PREVER O FUTURO')
-st.write('Preve o campeão da copa')
-
-st.header('opções de campeão...')
-
-# dados 
-dados = pd.DataFrame ({
-'gols':[12,15,10,18,14,11,16],
-'ranking':[1,3,2,1,4,10,2],
-'pais':['Brasil','Argentina' ,'França' ,'Brasil' ,'França' ,'Argentina', 'Brasil']
+# Criando os dados
+gamer = pd.DataFrame({
+    'horas_jogo': [1, 2, 4, 6, 8, 10],
+    'cansaco': [1, 2, 3, 5, 8, 10]
 })
-# alinhamento do modelo
-modelo_copa = DecisionTreeClassifier()
-# treinamento
-modelo_copa.fit(dados[['gols', 'ranking']], dados['pais'])
 
-gols_input = st.number_input('Quantos gol o time fez?', 0,30,15)
-rank_input =st.number_input('Qual posição', 1,100,1)
+# Variável de entrada
+X = gamer[['horas_jogo']]
 
-if st.button('Prever'):
-    #previsão
-    resultado_copa = modelo_copa.predict([[gols_input, rank_input]])
-    st.success(F'o provavel campeão é{resultado_copa}')
+# Variável alvo
+y = gamer['cansaco']
 
-# config.py
+# Criando o modelo
+modelo = LinearRegression()
 
-gols_input = ...
-modelo_copa = ...
-rank_input = ...
+# Treinando o modelo
+modelo.fit(X, y)
 
-# ___________________________________________
+# Fazendo previsão
+horas = 7
+previsao = modelo.predict([[horas]])
 
-
-
-# NOTAS DE ESTUDOS 
+# Resultados
+print("Coeficiente:", modelo.coef_[0])
+print("Intercepto:", modelo.intercept_)
+print(f"Previsão de cansaço para {horas} horas jogando: {previsao[0]:.2f}")
 
 
+#####################
 
-st.header('ANALISE DE NOTAS - PREVENDO')
-estudos = pd.DataFrame({
-'notas':[1,2,4,6,8,10],
-'horas':[2,4,5,7,9,10]
+#3
+
+# IA do Sorvete
+# Objetivo: prever a quantidade de sorvetes vendidos pela temperatura
+
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+
+# Dados
+sorvete = pd.DataFrame({
+    'temperatura': [18, 20, 24, 27, 30, 35],
+    'vendas': [20, 25, 40, 55, 70, 100]
 })
+
+# Variável independente (X)
+X = sorvete[['temperatura']]
+
+# Variável dependente (y)
+y = sorvete['vendas']
+
+# Criando o modelo
+modelo = LinearRegression()
+
+# Treinando o modelo
+modelo.fit(X, y)
+
+# Temperatura para previsão
+nova_temperatura = [[32]]
+
+# Fazendo previsão
+previsao = modelo.predict(nova_temperatura)
+
+# Resultado
+print("Temperatura:", nova_temperatura[0][0], "°C")
+print("Previsão de vendas:", round(previsao[0], 2), "sorvetes")
+
+
+###############
+
+#4
+# Detector de Aprovação Ninja
+# Objetivo: classificar aluno como aprovado ou reprovado
+
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+
+# Dados
+alunos = pd.DataFrame({
+    'faltas': [0, 1, 2, 5, 7, 10],
+    'resultado': [1, 1, 1, 0, 0, 0]
+})
+
+# Variável independente (X)
+X = alunos[['faltas']]
+
+# Variável dependente (y)
+y = alunos['resultado']
+
+# Criando o modelo
+modelo = LogisticRegression()
+
+# Treinando o modelo
+modelo.fit(X, y)
+
+# Quantidade de faltas para teste
+novas_faltas = [[3]]
+
+# Fazendo previsão
+previsao = modelo.predict(novas_faltas)
+
+# Resultado
+if previsao[0] == 1:
+    print("Aluno aprovado")
+else:
+    print("Aluno reprovado")
+
+    #######################
+
+
+#5
+    # IA do Pet Feliz
+# Objetivo: prever felicidade do cachorro
+
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+
+# Dados
+pets = pd.DataFrame({
+    'passeios': [1, 2, 3, 4, 5],
+    'felicidade': [2, 4, 5, 8, 10]
+})
+
+# Variável independente (X)
+X = pets[['passeios']]
+
+# Variável dependente (y)
+y = pets['felicidade']
+
+# Criando o modelo
+modelo = LinearRegression()
+
+# Treinando o modelo
+modelo.fit(X, y)
+
+# Quantidade de passeios para previsão
+novos_passeios = [[6]]
+
+# Fazendo previsão
+previsao = modelo.predict(novos_passeios)
+
+# Resultado
+print("Passeios por dia:", novos_passeios[0][0])
+print("Previsão de felicidade:", round(previsao[0], 2))
